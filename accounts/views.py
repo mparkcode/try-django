@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
+from .forms import UserLoginForm, UserRegistrationForm
 
 # Create your views here.
 def login(request):
@@ -13,10 +14,12 @@ def login(request):
             auth.login(request, user)
             return redirect("/")
         return HttpResponse("That user or password is wrong Dumbass")
-    return render(request, 'accounts/login.html')
+    login_form = UserLoginForm()
+    return render(request, 'accounts/login.html', {'form':login_form})
     
 def register(request):
-    return render(request, 'accounts/register.html')
+    registration_form = UserRegistrationForm()
+    return render(request, 'accounts/register.html', {'form':registration_form})
     
 def logout(request):
     auth.logout(request)
